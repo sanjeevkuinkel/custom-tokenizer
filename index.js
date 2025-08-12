@@ -1,6 +1,15 @@
-import { GoogleGenAI } from "@google/genai";
-import "dotenv/config";
+import express from "express";
+import gptTokenizer from "./tokenizer.js";
+const app = express();
+const PORT = 3000;
 
-// const ai = new GoogleGenAI({ apiKey: "YOUR_API_KEY" });
-const model = new GoogleGenAI({}); //no need to pass apikey because standard environment variable GOOGLE_API_KEY is set in .env file
+app.get("/", (req, res) => {
+  const sampleText = "Hello how are you?";
+  const tokens = gptTokenizer(sampleText);
+  console.log(tokens);
+  res.json({ tokens });
+});
 
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+});
